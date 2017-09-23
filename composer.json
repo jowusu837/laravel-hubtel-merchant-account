@@ -1,0 +1,23 @@
+{
+  "name": "jowusu837/laravelhubtelmerchantaccount",
+  "description": "Hubtel Merchant Account integration for Laravel",
+  "keywords": ["laravel", "payment", "gateway", "api", "hubtel", "merchant", "account"],
+  "type": "library",
+  "require": {
+    "guzzlehttp/guzzle": "^6.3"
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Victor J. Owusu",
+      "email": "jowusu837@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Jowusu837\\HubtelMerchantAccount\\": "src"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}

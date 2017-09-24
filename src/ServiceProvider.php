@@ -3,6 +3,7 @@
 namespace Jowusu837\HubtelMerchantAccount;
 
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
+use Jowusu837\HubtelMerchantAccount\OnlineCheckout\Request;
 
 
 class ServiceProvider extends BaseServiceProvider
@@ -29,5 +30,7 @@ class ServiceProvider extends BaseServiceProvider
         });
 
         $this->app->alias(MerchantAccount::class, 'HubtelMerchantAccount');
+        $this->app->alias(Request::class, 'OnlineCheckout');
+        $this->app->alias(ReceiveMobileMoneyRequest::class, 'ReceiveMobileMoneyRequest');
     }
 }

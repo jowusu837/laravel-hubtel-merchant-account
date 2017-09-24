@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: ProductMgr_170
- * Date: 9/23/2017
- * Time: 10:51 PM
- */
-
 namespace Jowusu837\HubtelMerchantAccount\OnlineCheckout;
 
 

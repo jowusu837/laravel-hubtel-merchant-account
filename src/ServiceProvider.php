@@ -31,8 +31,8 @@ class ServiceProvider extends BaseServiceProvider
     {
         $this->mergeConfigFrom($this->configPath(), 'hubtelmerchantaccount');
 
-        $this->app->singleton(MerchantAccount::class, function () {
-            return new MerchantAccount();
+        $this->app->singleton(MerchantAccount::class, function($app){
+            return new MerchantAccount($app['config']->get('hubtelmerchantaccount'));
         });
 
         $this->app->alias(MerchantAccount::class, 'HubtelMerchantAccount');

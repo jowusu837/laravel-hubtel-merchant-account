@@ -5,7 +5,7 @@ return [
 	/**
 	 * Merchant account number
 	 */
-	"account_number" 		=>	env('HUBTEL_MERCHANT_ACCOUNT_NUMBER')
+	"account_number" 		=>	env('HUBTEL_MERCHANT_ACCOUNT_NUMBER'),
 
 	/**
 	 * Login credentials for hubtel api

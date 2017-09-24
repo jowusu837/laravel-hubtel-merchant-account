@@ -18,6 +18,6 @@ class Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'OnlineCheckout';
+        return 'OnlineCheckoutRequest';
     }
 }

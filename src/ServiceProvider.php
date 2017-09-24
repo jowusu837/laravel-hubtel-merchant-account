@@ -14,13 +14,12 @@ class ServiceProvider extends BaseServiceProvider
      */
     public function boot()
     {
-        $configPath = __DIR__ . '/../config/hubtelmerchantaccount.php';
         if (function_exists('config_path')) {
             $publishPath = config_path('hubtelmerchantaccount.php');
         } else {
             $publishPath = base_path('config/hubtelmerchantaccount.php');
         }
-        $this->publishes([$configPath => $publishPath], 'config');
+        $this->publishes([$this->configPath() => $publishPath], 'config');
     }
 
     /**
@@ -37,6 +36,10 @@ class ServiceProvider extends BaseServiceProvider
         });
 
         $this->app->alias(MerchantAccount::class, 'HubtelMerchantAccount');
+    }
+
+    protected function configPath() {
+        return __DIR__ . '/../config/hubtelmerchantaccount.php';
     }
 
 }

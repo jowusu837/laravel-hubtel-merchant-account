@@ -24,4 +24,11 @@ class Request
      * @var mixed
      */
     public $custom_data;
+
+    public function __construct()
+    {
+        $this->invoice = new Invoice();
+        $this->store = new Store();
+        $this->actions = new Actions();
+    }
 }

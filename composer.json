@@ -18,6 +18,5 @@
       "Jowusu837\\HubtelMerchantAccount\\": "src"
     }
   },
-  "minimum-stability": "dev",
-  //"prefer-stable": true
+  "minimum-stability": "dev"
 }

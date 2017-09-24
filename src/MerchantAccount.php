@@ -12,35 +12,20 @@ use GuzzleHttp\Client;
 use Jowusu837\HubtelMerchantAccount\OnlineCheckout\Request as OnlineCheckoutRequest;
 use Jowusu837\HubtelMerchantAccount\OnlineCheckout\Response as OnlineCheckoutResponse;
 use Jowusu837\HubtelMerchantAccount\OnlineCheckout\InvoiceStatusResponse as OnlineCheckoutInvoiceStatusResponse;
+use Illuminate\Config\Repository as ConfigRepository;
 
 
 class MerchantAccount
 {
+    /** @var \Illuminate\Config\Repository */
+    protected $config;
 
     /**
-     * @var string
+     * @param \Illuminate\Config\Repository $config
      */
-    protected $merchantAccountNumber;
-
-    /**
-     * @var string
-     */
-    protected $username;
-
-    /**
-     * @var string
-     */
-    protected $password;
-
-    public function __construct()
+    public function __construct(/*ConfigRepository */ $config)
     {
-        $this->merchantAccountNumber = env('HUBTEL_MERCHANT_ACCOUNT_NUMBER');
-        $this->username = env('HUBTEL_MERCHANT_ACCOUNT_CLIENT_ID');
-        $this->password = env('HUBTEL_MERCHANT_ACCOUNT_CLIENT_SECRET');
-
-        if (!$this->merchantAccountNumber || !$this->username || !$this->password) {
-            throw new \Exception('Please ensure that HUBTEL_MERCHANT_ACCOUNT_NUMBER, HUBTEL_MERCHANT_ACCOUNT_CLIENT_ID and HUBTEL_MERCHANT_ACCOUNT_CLIENT_SECRET are properly configured in your .env file.');
-        }
+        $this->config = $config;
     }
 
     /**
@@ -54,16 +39,16 @@ class MerchantAccount
     {
         $http = new Client(['base_uri' => 'https://api.hubtel.com']);
 
-        $response = $http->request('POST', "/v1/merchantaccount/merchants/{$this->merchantAccountNumber}/receive/mobilemoney", [
+        $response = $http->request('POST', "/v1/merchantaccount/merchants/{$this->config->get('account_number')}/receive/mobilemoney", [
             'json' => json_decode($request, true),
-            'auth' => [$this->username, $this->password]
+            'auth' => [$this->config->get('api_key.client_id'), $this->config->get('api_key.client_secret')]
         ]);
 
         if ($response->getStatusCode() !== 200) {
             throw new \Exception((string)$response->getBody());
         }
 
-        return json_encode((string)$response->getBody());
+        return json_decode((string)$response->getBody());
     }
 
     public function sendMobileMoney()
@@ -85,21 +70,24 @@ class MerchantAccount
      */
     public function onlineCheckout(OnlineCheckoutRequest $request)
     {
+        if (!$request->store->name) {
+            $request->store->name = $this->config->get('store.name');
+        }
+
         $http = new Client(['base_uri' => 'https://api.hubtel.com']);
 
         $response = $http->request('POST', "/v1/merchantaccount/onlinecheckout/invoice/create", [
-            'json' => json_decode($request, true),
-            'auth' => [$this->username, $this->password]
+            'json' => json_decode(json_encode($request), true),
+            'auth' => [$this->config->get('api_key.client_id'), $this->config->get('api_key.client_secret')]
         ]);
 
         if ($response->getStatusCode() !== 200) {
             throw new \Exception((string)$response->getBody());
         }
 
-        /** @var OnlineCheckoutResponse $invoiceResponse */
-        $invoiceResponse = json_encode((string)$response->getBody());
+        $invoiceResponse = json_decode((string)$response->getBody());
 
-        return redirect($invoiceResponse->response_text);
+        return header('Location: '. $invoiceResponse->response_text);;
     }
 
     /**
@@ -119,7 +107,7 @@ class MerchantAccount
             throw new \Exception((string)$response->getBody());
         }
 
-        return json_encode((string)$response->getBody());
+        return json_decode((string)$response->getBody());
     }
 
     public function transactionStatus()

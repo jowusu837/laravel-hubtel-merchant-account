@@ -22,4 +22,4 @@ return [
 	"store" => [
 		"name" 				=>	env('APP_NAME')
 	]
-]
+];

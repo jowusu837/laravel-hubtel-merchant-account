@@ -12,10 +12,12 @@ use GuzzleHttp\Client;
 use Jowusu837\HubtelMerchantAccount\OnlineCheckout\Request as OnlineCheckoutRequest;
 use Jowusu837\HubtelMerchantAccount\OnlineCheckout\Response as OnlineCheckoutResponse;
 use Jowusu837\HubtelMerchantAccount\OnlineCheckout\InvoiceStatusResponse as OnlineCheckoutInvoiceStatusResponse;
-
+use Jowusu837\HubtelMerchantAccount\Helpers\FormatsRequests;
 
 class MerchantAccount
 {
+    use FormatsRequests;
+
     /** @var array */
     protected $config;
 
@@ -39,7 +41,10 @@ class MerchantAccount
         $http = new Client(['base_uri' => 'https://api.hubtel.com']);
 
         $response = $http->request('POST', "/v1/merchantaccount/merchants/{$this->config['account_number']}/receive/mobilemoney", [
-            'json' => json_decode($request, true),
+            'headers'=>[
+                'Content-type' => 'application/json'
+            ],
+            'body' => $this->toJson($request),
             'auth' => [$this->config['api_key']['client_id'], $this->config['api_key']['client_secret']]
         ]);
 

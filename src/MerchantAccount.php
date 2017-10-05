@@ -9,10 +9,11 @@
 namespace Jowusu837\HubtelMerchantAccount;
 
 use GuzzleHttp\Client;
+use Jowusu837\HubtelMerchantAccount\Helpers\FormatsRequests;
+use Jowusu837\HubtelMerchantAccount\ReceiveMobileMoneyResponse;
 use Jowusu837\HubtelMerchantAccount\OnlineCheckout\Request as OnlineCheckoutRequest;
 use Jowusu837\HubtelMerchantAccount\OnlineCheckout\Response as OnlineCheckoutResponse;
 use Jowusu837\HubtelMerchantAccount\OnlineCheckout\InvoiceStatusResponse as OnlineCheckoutInvoiceStatusResponse;
-use Jowusu837\HubtelMerchantAccount\Helpers\FormatsRequests;
 
 class MerchantAccount
 {
@@ -51,8 +52,8 @@ class MerchantAccount
         if ($response->getStatusCode() !== 200) {
             throw new \Exception((string)$response->getBody());
         }
-
-        return json_decode((string)$response->getBody());
+        
+        return new ReceiveMobileMoneyResponse(...$this->flattern(json_decode((string)$response->getBody(),true)));
     }
 
 //    public function sendMobileMoney()

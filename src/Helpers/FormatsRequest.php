@@ -20,4 +20,22 @@ trait FormatsRequests
         }
         return json_encode($json);
     }
+
+    public function flattern($array)
+    {
+        $flattened = array();
+        if(!is_array($array))
+        {
+            throw new InvalidArgumentException('flattern flatterns only arrays');
+        }
+        foreach ($array as $value) {
+			if(!is_array($value))
+			{
+                if(!is_null($value)) $flattened[] = $value;
+			}else{
+				$flattened = array_merge($flattened,$this->flattern($value));
+			}
+        }
+        return $flattened;
+    }
 }

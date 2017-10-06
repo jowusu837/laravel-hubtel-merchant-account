@@ -2,6 +2,7 @@
 
 namespace Jowusu837\HubtelMerchantAccount;
 
+use Jowusu837\HubtelMerchantAccount\Helpers\SendsRequests;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 
 
@@ -32,7 +33,7 @@ class ServiceProvider extends BaseServiceProvider
         $this->mergeConfigFrom($this->configPath(), 'hubtelmerchantaccount');
 
         $this->app->singleton(MerchantAccount::class, function($app){
-            return new MerchantAccount($app['config']->get('hubtelmerchantaccount'));
+            return new MerchantAccount(new SendsRequests($app['config']->get('hubtelmerchantaccount')));
         });
 
         $this->app->alias(MerchantAccount::class, 'HubtelMerchantAccount');

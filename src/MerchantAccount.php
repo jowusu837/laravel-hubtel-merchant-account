@@ -9,6 +9,8 @@
 namespace Jowusu837\HubtelMerchantAccount;
 
 use GuzzleHttp\Client;
+use Jowusu837\HubtelMerchantAccount\RefundRequest;
+use Jowusu837\HubtelMerchantAccount\RefundResponse;
 use Jowusu837\HubtelMerchantAccount\Helpers\SendsRequests;
 use Jowusu837\HubtelMerchantAccount\ReceiveMobileMoneyResponse;
 use Jowusu837\HubtelMerchantAccount\OnlineCheckout\Request as OnlineCheckoutRequest;
@@ -46,10 +48,11 @@ class MerchantAccount
 //        throw new \Exception("Method not yet implemented");
 //    }
 //
-//    public function refundMobileMoney()
-//    {
-//        throw new \Exception("Method not yet implemented");
-//    }
+   public function refundMobileMoney(RefundRequest $request)
+   {
+        $response = $this->http->sendRefundMobileMoneyRequest($request);
+        return new RefundResponse(...$response);
+   }
 
     /**
      * Online checkout

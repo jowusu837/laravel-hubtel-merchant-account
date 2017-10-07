@@ -14,9 +14,9 @@ class ReceiveMobileMoneyResponse
     protected $Amount;
     protected $Charges;
 
-    public function __construct($ResponseCode = null, $AmountAfterCharges = null, $TransactionId = null,
-     $ClientReference = null, $Description = null, $ExternalTransactionId = null,
-     $Amount = null, $Charges = null
+    public function __construct($ResponseCode, $AmountAfterCharges, $TransactionId ,
+     $ClientReference, $Description , $ExternalTransactionId,
+     $Amount , $Charges 
     )
      {
         $this->Amount = $Amount;

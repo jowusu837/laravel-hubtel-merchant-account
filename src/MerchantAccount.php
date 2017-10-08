@@ -35,7 +35,6 @@ class MerchantAccount
      *
      * @param ReceiveMobileMoneyRequest $request
      * @return ReceiveMobileMoneyResponse
-     * @throws \Exception
      */
     public function receiveMobileMoney(ReceiveMobileMoneyRequest $request)
     {
@@ -48,6 +47,12 @@ class MerchantAccount
 //        throw new \Exception("Method not yet implemented");
 //    }
 //
+    /**
+     * Refund mobile money
+     *
+     * @param RefundRequest $request
+     * @return RefundResponse
+     */
    public function refundMobileMoney(RefundRequest $request)
    {
         $response = $this->http->sendRefundMobileMoneyRequest($request);
@@ -59,7 +64,6 @@ class MerchantAccount
      *
      * @param OnlineCheckoutRequest $request
      * @return mixed
-     * @throws \Exception
      */
     public function onlineCheckout(OnlineCheckoutRequest $request)
     {
@@ -72,7 +76,6 @@ class MerchantAccount
      *
      * @param string $token
      * @return OnlineCheckoutInvoiceStatusResponse
-     * @throws \Exception
      */
     public function checkInvoiceStatus($token)
     {

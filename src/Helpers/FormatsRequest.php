@@ -38,4 +38,21 @@ trait FormatsRequests
         }
         return $flattened;
     }
+
+    public function toArray($object)
+    {
+        $array = array();
+        if(!is_object($object))
+        {
+            throw new InvalidArgumentException('toArray formats only objects');
+        }
+        foreach(get_object_vars($object) as $property => $value )
+        {
+            if(!is_null($value))
+            {
+                $array[$property] = $value;
+            }
+        }
+        return $array;
+    }
 }

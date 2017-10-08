@@ -12,6 +12,7 @@ use GuzzleHttp\Client;
 use Jowusu837\HubtelMerchantAccount\RefundRequest;
 use Jowusu837\HubtelMerchantAccount\RefundResponse;
 use Jowusu837\HubtelMerchantAccount\Helpers\SendsRequests;
+use Jowusu837\HubtelMerchantAccount\TransactionStatusRequest;
 use Jowusu837\HubtelMerchantAccount\ReceiveMobileMoneyResponse;
 use Jowusu837\HubtelMerchantAccount\OnlineCheckout\Request as OnlineCheckoutRequest;
 use Jowusu837\HubtelMerchantAccount\OnlineCheckout\Response as OnlineCheckoutResponse;
@@ -83,8 +84,15 @@ class MerchantAccount
         return $response;
     }
 
-//    public function transactionStatus()
-//    {
-//        throw new \Exception("Method not yet implemented");
-//    }
+    /**
+     * Check transaction status
+     *
+     * @param TransactionStatusRequest $request
+     * @return TransactionStatusResponse
+     */
+   public function transactionStatus(TransactionStatusRequest $request)
+   {
+       $response = $this->http->sendTransactionStatusRequest($request);
+       return new TransactionStatusResponse($response);
+   }
 }

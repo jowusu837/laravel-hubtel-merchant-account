@@ -5,6 +5,7 @@ namespace Jowusu837\HubtelMerchantAccount\Helpers;
 use GuzzleHttp\Client;
 use Jowusu837\HubtelMerchantAccount\RefundRequest;
 use Jowusu837\HubtelMerchantAccount\Helpers\FormatsRequests;
+use Jowusu837\HubtelMerchantAccount\TransactionStatusRequest;
 use Jowusu837\HubtelMerchantAccount\ReceiveMobileMoneyRequest;
 use Jowusu837\HubtelMerchantAccount\OnlineCheckout\Request as OnlineCheckoutRequest;
 
@@ -80,6 +81,17 @@ class SendsRequests
         return $this->flattern(json_decode((string)$response->getBody(),true)); 
     }
 
+    public function sendTransactionStatusRequest(TransactionStatusRequest $request)
+    {
+        $response = $this->http->request('GET', "/v1/merchantaccount/merchants/{$this->config['account_number']}/transactions/status", [
+            'auth'=>$this->auth,
+            'query'=>$this->toArray($request)
+        ]); 
+        $this->checkResponseStatus($response);
+        $result= json_decode((string)$response->getBody(),true);
+        return array_merge($result["Data"][0],["ResponseCode"=>$result["ResponseCode"]]);
+    }
+    
     private function checkResponseStatus($response)
     {
         if ($response->getStatusCode() !== 200) {

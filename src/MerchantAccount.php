@@ -12,6 +12,7 @@ use GuzzleHttp\Client;
 use Jowusu837\HubtelMerchantAccount\RefundRequest;
 use Jowusu837\HubtelMerchantAccount\RefundResponse;
 use Jowusu837\HubtelMerchantAccount\Helpers\SendsRequests;
+use Jowusu837\HubtelMerchantAccount\TransactionStatusRequest;
 use Jowusu837\HubtelMerchantAccount\ReceiveMobileMoneyResponse;
 use Jowusu837\HubtelMerchantAccount\OnlineCheckout\Request as OnlineCheckoutRequest;
 use Jowusu837\HubtelMerchantAccount\OnlineCheckout\Response as OnlineCheckoutResponse;
@@ -35,7 +36,6 @@ class MerchantAccount
      *
      * @param ReceiveMobileMoneyRequest $request
      * @return ReceiveMobileMoneyResponse
-     * @throws \Exception
      */
     public function receiveMobileMoney(ReceiveMobileMoneyRequest $request)
     {
@@ -48,6 +48,12 @@ class MerchantAccount
 //        throw new \Exception("Method not yet implemented");
 //    }
 //
+    /**
+     * Refund mobile money
+     *
+     * @param RefundRequest $request
+     * @return RefundResponse
+     */
    public function refundMobileMoney(RefundRequest $request)
    {
         $response = $this->http->sendRefundMobileMoneyRequest($request);
@@ -59,7 +65,6 @@ class MerchantAccount
      *
      * @param OnlineCheckoutRequest $request
      * @return mixed
-     * @throws \Exception
      */
     public function onlineCheckout(OnlineCheckoutRequest $request)
     {
@@ -72,7 +77,6 @@ class MerchantAccount
      *
      * @param string $token
      * @return OnlineCheckoutInvoiceStatusResponse
-     * @throws \Exception
      */
     public function checkInvoiceStatus($token)
     {
@@ -80,8 +84,15 @@ class MerchantAccount
         return $response;
     }
 
-//    public function transactionStatus()
-//    {
-//        throw new \Exception("Method not yet implemented");
-//    }
+    /**
+     * Check transaction status
+     *
+     * @param TransactionStatusRequest $request
+     * @return TransactionStatusResponse
+     */
+   public function transactionStatus(TransactionStatusRequest $request)
+   {
+       $response = $this->http->sendTransactionStatusRequest($request);
+       return new TransactionStatusResponse($response);
+   }
 }

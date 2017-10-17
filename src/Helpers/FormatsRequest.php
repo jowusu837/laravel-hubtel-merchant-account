@@ -26,7 +26,7 @@ trait FormatsRequests
         $flattened = array();
         if(!is_array($array))
         {
-            throw new InvalidArgumentException('flattern flatterns only arrays');
+            throw new InvalidArgumentException('flatten works with arrays only!');
         }
         foreach ($array as $value) {
 			if(!is_array($value))

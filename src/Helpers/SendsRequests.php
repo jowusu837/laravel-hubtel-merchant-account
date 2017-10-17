@@ -37,7 +37,7 @@ class SendsRequests
         
         $this->checkResponseStatus($response);
 
-        return $this->flattern(json_decode((string)$response->getBody(),true));
+        return $this->flatten(json_decode((string)$response->getBody(),true));
     }
 
     public function sendOnlineCheckoutRequest(OnlineCheckoutRequest $request)
@@ -77,7 +77,7 @@ class SendsRequests
             'auth' => $this->auth
         ]); 
         $this->checkResponseStatus($response);
-        return $this->flattern(json_decode((string)$response->getBody(),true)); 
+        return $this->flatten(json_decode((string)$response->getBody(),true));
     }
 
     private function checkResponseStatus($response)

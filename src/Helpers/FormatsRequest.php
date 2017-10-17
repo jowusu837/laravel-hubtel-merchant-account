@@ -21,7 +21,7 @@ trait FormatsRequests
         return json_encode($json);
     }
 
-    public function flattern($array)
+    public function flatten($array)
     {
         $flattened = array();
         if(!is_array($array))
@@ -33,7 +33,7 @@ trait FormatsRequests
 			{
                 if(!is_null($value)) $flattened[] = $value;
 			}else{
-				$flattened = array_merge($flattened,$this->flattern($value));
+				$flattened = array_merge($flattened,$this->flatten($value));
 			}
         }
         return $flattened;

@@ -1,8 +1,8 @@
 <?php
 
-namespace Jowusu837\HubtelMerchantAccount;
+namespace Jowusu837\HubtelMerchantAccount\MobileMoney\Refund;
 
-class RefundRequest
+class Request
 {
     /**
      * The unique ID of the mobile money 

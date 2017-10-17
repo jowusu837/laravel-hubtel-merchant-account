@@ -30,20 +30,20 @@ class MerchantAccount
     /**
      * Receive mobile money
      *
-     * @param ReceiveMobileMoneyRequest $request
-     * @return ReceiveMobileMoneyResponse
+     * @param Request $request
+     * @return Response
      * @throws \Exception
      */
-    public function receiveMobileMoney(ReceiveMobileMoneyRequest $request)
+    public function receiveMobileMoney(Request $request)
     {
         $response = $this->http->sendReceiveMobileMoneyRequest($request);
-        return new ReceiveMobileMoneyResponse(...$response);
+        return new Response(...$response);
     }
 
-    public function refundMobileMoney(RefundRequest $request)
+    public function refundMobileMoney(Request $request)
     {
         $response = $this->http->sendRefundMobileMoneyRequest($request);
-        return new RefundResponse(...$response);
+        return new Response(...$response);
     }
 
     /**

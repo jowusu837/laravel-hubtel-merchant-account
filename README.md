@@ -22,16 +22,19 @@ Require the `jowusu837/laravelhubtelmerchantaccount` package in your `composer.j
 ```sh
 $ composer require jowusu837/laravelhubtelmerchantaccount
 ```
+If you're using Laravel 5.5, this is all there is to do.
 
-Add the HubtelMerchantAccount\ServiceProvider to your `config/app.php` providers array:
+Should you still be on older versions of Laravel, the final steps for you are to add the service provider of the package and alias the package. To do this open your `config/app.php` file.
+
+Add the HubtelMerchantAccount\ServiceProvider to your `providers` array:
 ```php
 Jowusu837\HubtelMerchantAccount\ServiceProvider::class,
 ```
-Add facade
+And add a new line to the `aliases` array:
 ```php
 'aliases' => [
       ...
-      HubtelMerchantAccount' => Jowusu837\HubtelMerchantAccount\HubtelMerchantAccountFacade::class,
+      'HubtelMerchantAccount' => Jowusu837\HubtelMerchantAccount\HubtelMerchantAccountFacade::class,
       ...
  ]
 ```

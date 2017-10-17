@@ -18,5 +18,15 @@
       "Jowusu837\\HubtelMerchantAccount\\": "src"
     }
   },
-  "minimum-stability": "dev"
+  "minimum-stability": "dev",
+  "extra": {
+    "laravel": {
+        "providers": [
+            "Jowusu837\\HubtelMerchantAccount\\ServiceProvider"
+        ],
+        "aliases": {
+            "HubtelMerchantAccount": "Jowusu837\\HubtelMerchantAccount\\HubtelMerchantAccountFacade"
+        }
+    }
+  }
 }

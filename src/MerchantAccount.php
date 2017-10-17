@@ -8,57 +8,43 @@
 
 namespace Jowusu837\HubtelMerchantAccount;
 
-use GuzzleHttp\Client;
-use Jowusu837\HubtelMerchantAccount\OnlineCheckout\Request as OnlineCheckoutRequest;
-use Jowusu837\HubtelMerchantAccount\OnlineCheckout\Response as OnlineCheckoutResponse;
-use Jowusu837\HubtelMerchantAccount\OnlineCheckout\InvoiceStatusResponse as OnlineCheckoutInvoiceStatusResponse;
 
+use Jowusu837\HubtelMerchantAccount\Helpers\SendsRequests;
+use Jowusu837\HubtelMerchantAccount\OnlineCheckout\Request as OnlineCheckoutRequest;
+use Jowusu837\HubtelMerchantAccount\OnlineCheckout\InvoiceStatusResponse as OnlineCheckoutInvoiceStatusResponse;
 
 class MerchantAccount
 {
-    /** @var array */
-    protected $config;
+    /** @var SendsRequests */
+    protected $http;
 
     /**
-     * @param array $config
+     * @param SendsRequests $http
+     * @internal param array $config
      */
-    public function __construct($config)
+    public function __construct(SendsRequests $http)
     {
-        $this->config = $config;
+        $this->http = $http;
     }
 
     /**
      * Receive mobile money
      *
-     * @param ReceiveMobileMoneyRequest $request
-     * @return ReceiveMobileMoneyResponse
+     * @param Request $request
+     * @return Response
      * @throws \Exception
      */
-    public function receiveMobileMoney(ReceiveMobileMoneyRequest $request)
+    public function receiveMobileMoney(Request $request)
     {
-        $http = new Client(['base_uri' => 'https://api.hubtel.com']);
-
-        $response = $http->request('POST', "/v1/merchantaccount/merchants/{$this->config['account_number']}/receive/mobilemoney", [
-            'json' => json_decode($request, true),
-            'auth' => [$this->config['api_key']['client_id'], $this->config['api_key']['client_secret']]
-        ]);
-
-        if ($response->getStatusCode() !== 200) {
-            throw new \Exception((string)$response->getBody());
-        }
-
-        return json_decode((string)$response->getBody());
+        $response = $this->http->sendReceiveMobileMoneyRequest($request);
+        return new Response(...$response);
     }
 
-//    public function sendMobileMoney()
-//    {
-//        throw new \Exception("Method not yet implemented");
-//    }
-//
-//    public function refundMobileMoney()
-//    {
-//        throw new \Exception("Method not yet implemented");
-//    }
+    public function refundMobileMoney(Request $request)
+    {
+        $response = $this->http->sendRefundMobileMoneyRequest($request);
+        return new Response(...$response);
+    }
 
     /**
      * Online checkout
@@ -69,24 +55,8 @@ class MerchantAccount
      */
     public function onlineCheckout(OnlineCheckoutRequest $request)
     {
-        if (!$request->store->name) {
-            $request->store->name = $this->config['store']['name'];
-        }
-
-        $http = new Client(['base_uri' => 'https://api.hubtel.com']);
-
-        $response = $http->request('POST', "/v1/merchantaccount/onlinecheckout/invoice/create", [
-            'json' => json_decode(json_encode($request), true),
-            'auth' => [$this->config['api_key']['client_id'], $this->config['api_key']['client_secret']]
-        ]);
-
-        if ($response->getStatusCode() !== 200) {
-            throw new \Exception((string)$response->getBody());
-        }
-
-        $invoiceResponse = json_decode((string)$response->getBody());
-
-        return header('Location: ' . $invoiceResponse->response_text);;
+        $checkout_url = $this->http->sendOnlineCheckoutRequest($request);
+        return header('Location: ' . $checkout_url);
     }
 
     /**
@@ -98,19 +68,8 @@ class MerchantAccount
      */
     public function checkInvoiceStatus($token)
     {
-        $http = new Client(['base_uri' => 'https://api.hubtel.com']);
-
-        $response = $http->request('GET', "/v1/merchantaccount/onlinecheckout/invoice/status/{$token}");
-
-        if ($response->getStatusCode() !== 200) {
-            throw new \Exception((string)$response->getBody());
-        }
-
-        return json_decode((string)$response->getBody());
+        $response = $this->http->sendCheckInvoiceStatusRequest($token);
+        return $response;
     }
 
-//    public function transactionStatus()
-//    {
-//        throw new \Exception("Method not yet implemented");
-//    }
 }

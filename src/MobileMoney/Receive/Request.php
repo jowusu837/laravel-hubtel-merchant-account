@@ -6,10 +6,10 @@
  * Time: 9:04 PM
  */
 
-namespace Jowusu837\HubtelMerchantAccount;
+namespace Jowusu837\HubtelMerchantAccount\MobileMoney\Receive;
 
 
-class ReceiveMobileMoneyRequest
+class Request
 {
     public $CustomerName;
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace Jowusu837\HubtelMerchantAccount;
+namespace Jowusu837\HubtelMerchantAccount\MobileMoney\Refund;
 
-class RefundResponse
+class Response
 {
     protected $ResponseCode;
     protected $TransactionId;

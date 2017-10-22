@@ -1,6 +1,13 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: ProductMgr_170
+ * Date: 10/17/2017
+ * Time: 11:19 AM
+ */
 
 namespace Jowusu837\HubtelMerchantAccount\Helpers;
+
 
 trait FormatsRequests
 {
@@ -21,20 +28,20 @@ trait FormatsRequests
         return json_encode($json);
     }
 
-    public function flattern($array)
+    public function flatten($array)
     {
         $flattened = array();
         if(!is_array($array))
         {
-            throw new InvalidArgumentException('flattern flatterns only arrays');
+            throw new InvalidArgumentException('flatten works with arrays only!');
         }
         foreach ($array as $value) {
-			if(!is_array($value))
-			{
+            if(!is_array($value))
+            {
                 if(!is_null($value)) $flattened[] = $value;
-			}else{
-				$flattened = array_merge($flattened,$this->flattern($value));
-			}
+            }else{
+                $flattened = array_merge($flattened,$this->flatten($value));
+            }
         }
         return $flattened;
     }

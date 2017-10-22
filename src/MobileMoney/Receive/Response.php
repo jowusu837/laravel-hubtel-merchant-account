@@ -1,9 +1,9 @@
 <?php
 
-namespace Jowusu837\HubtelMerchantAccount;
+namespace Jowusu837\HubtelMerchantAccount\MobileMoney\Receive;
 
 
-class ReceiveMobileMoneyResponse
+class Response
 {
     protected $ResponseCode;
     protected $AmountAfterCharges;

@@ -10,6 +10,10 @@ namespace Jowusu837\HubtelMerchantAccount;
 
 
 use Jowusu837\HubtelMerchantAccount\Helpers\SendsRequests;
+use Jowusu837\HubtelMerchantAccount\MobileMoney\Receive\Request as ReceiveMobileMoneyRequest;
+use Jowusu837\HubtelMerchantAccount\MobileMoney\Receive\Response as ReceiveMobileMoneyResponse;
+use Jowusu837\HubtelMerchantAccount\MobileMoney\Refund\Request as RefundMobileMoneyRequest;
+use Jowusu837\HubtelMerchantAccount\MobileMoney\Refund\Response as RefundMobileMoneyResponse;
 use Jowusu837\HubtelMerchantAccount\OnlineCheckout\Request as OnlineCheckoutRequest;
 use Jowusu837\HubtelMerchantAccount\OnlineCheckout\InvoiceStatusResponse as OnlineCheckoutInvoiceStatusResponse;
 
@@ -30,20 +34,24 @@ class MerchantAccount
     /**
      * Receive mobile money
      *
-     * @param Request $request
-     * @return Response
-     * @throws \Exception
+     * @param ReceiveMobileMoneyRequest $request
+     * @return ReceiveMobileMoneyResponse
      */
-    public function receiveMobileMoney(Request $request)
+    public function receiveMobileMoney(ReceiveMobileMoneyRequest $request)
     {
         $response = $this->http->sendReceiveMobileMoneyRequest($request);
-        return new Response(...$response);
+        return new ReceiveMobileMoneyResponse(...$response);
     }
 
-    public function refundMobileMoney(Request $request)
+    /**
+     * Refund mobile money
+     * @param RefundMobileMoneyRequest $request
+     * @return RefundMobileMoneyResponse
+     */
+    public function refundMobileMoney(RefundMobileMoneyRequest $request)
     {
         $response = $this->http->sendRefundMobileMoneyRequest($request);
-        return new Response(...$response);
+        return new RefundMobileMoneyResponse(...$response);
     }
 
     /**

@@ -39,8 +39,8 @@ class SendsRequests
             ],
             'body' => $this->toJson($request),
             'auth' => $this->auth
-        ]);   
-        
+        ]);
+
         $this->checkResponseStatus($response);
 
         return $this->flatten(json_decode((string)$response->getBody(),true));
@@ -64,7 +64,7 @@ class SendsRequests
         $this->checkResponseStatus($response);
 
         $invoiceResponse = json_decode((string)$response->getBody());
-        
+
         return $invoiceResponse->response_text;
     }
 
@@ -75,9 +75,9 @@ class SendsRequests
     public function sendCheckInvoiceStatusRequest($token)
     {
         $response = $this->http->request('GET', "/v1/merchantaccount/onlinecheckout/invoice/status/{$token}");
-        
+
         $this->checkResponseStatus($response);
-        
+
         return json_decode((string)$response->getBody());
     }
 
@@ -93,7 +93,7 @@ class SendsRequests
             ],
             'body' => $this->toJson($request),
             'auth' => $this->auth
-        ]); 
+        ]);
         $this->checkResponseStatus($response);
         return $this->flatten(json_decode((string)$response->getBody(),true));
     }

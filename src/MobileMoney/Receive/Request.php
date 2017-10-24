@@ -11,26 +11,26 @@ namespace Jowusu837\HubtelMerchantAccount\MobileMoney\Receive;
 
 class Request
 {
-    public $CustomerName;
+    public $CustomerName = '';
 
-    public $CustomerEmail;
+    public $CustomerEmail = '';
 
-    public $CustomerMsisdn;
+    public $CustomerMsisdn = '';
 
-    public $Channel;
+    public $Channel = '';
 
-    public $Amount;
+    public $Amount = 0;
 
-    public $PrimaryCallbackURL;
+    public $PrimaryCallbackURL = '';
 
-    public $SecondaryCallbackURL;
+    public $SecondaryCallbackURL = '';
 
-    public $ClientReference;
+    public $ClientReference = '';
 
-    public $Description;
+    public $Description = '';
 
-    public $Token;
+    public $Token = '';
 
-    public $FeesOnCustomer;
+    public $FeesOnCustomer = false;
 
 }

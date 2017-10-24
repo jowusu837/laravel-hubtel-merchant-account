@@ -20,10 +20,7 @@ trait FormatsRequests
         }
         foreach(get_object_vars($object) as $property => $value )
         {
-            if(!is_null($value))
-            {
-                $json[$property] = $value;
-            }
+            $json[$property] = $value;
         }
         return json_encode($json);
     }

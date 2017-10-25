@@ -95,7 +95,31 @@ class CheckoutController extends Controller
 
 ## Receive Mobile Money
 
-This feature is under development. Will update soon.
+Here is how you request mobile money payment from say a controller method:
+```php
+namespace App\Http\Controllers;
+
+use HubtelMerchantAccount;
+use Jowusu837\HubtelMerchantAccount\MobileMoney\Receive\Request as ReceiveMobileMoneyRequest;
+
+class CheckoutController extends Controller
+{
+  
+  ...
+  
+  public function payOnline(Request $request)
+    {
+        $request = new ReceiveMobileMoneyRequest();
+        $request->Amount = $this->transaction->amount;
+        $request->Channel = $this->transaction->channel;
+        $request->CustomerMsisdn = $this->transaction->mobile_wallet_number;
+        $request->CustomerName = "N/A";
+        $request->Description = "General payment";
+        $request->PrimaryCallbackURL = "https://my-application.com/handle" . $this->transaction->id;
+        $request->SecondaryCallbackURL = "https://my-application.com/handle/" . $this->transaction->id;
+        $response = HubtelMerchantAccount::receiveMobileMoney($request);
+    }
+```
 
 ## Configuration
 

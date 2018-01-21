@@ -40,7 +40,8 @@ class MerchantAccount
     public function receiveMobileMoney(ReceiveMobileMoneyRequest $request)
     {
         $response = $this->http->sendReceiveMobileMoneyRequest($request);
-        return new ReceiveMobileMoneyResponse(...$response);
+        return $response;
+        // return new ReceiveMobileMoneyResponse(...$response);
     }
 
     /**

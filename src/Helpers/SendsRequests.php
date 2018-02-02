@@ -4,9 +4,7 @@ namespace Jowusu837\HubtelMerchantAccount\Helpers;
 
 use GuzzleHttp\Client;
 use Jowusu837\HubtelMerchantAccount\MobileMoney\Refund\Request as RefundRequest;
-use Jowusu837\HubtelMerchantAccount\MobileMoney\Refund\Response as RefundResponse;
 use Jowusu837\HubtelMerchantAccount\MobileMoney\Receive\Request as ReceiveMobileMoneyRequest;
-use Jowusu837\HubtelMerchantAccount\MobileMoney\Receive\Response as ReceiveMobileMoneyResponse;
 use Jowusu837\HubtelMerchantAccount\OnlineCheckout\Request as OnlineCheckoutRequest;
 use Jowusu837\HubtelMerchantAccount\OnlineCheckout\Response as OnlineCheckoutResponse;
 
@@ -29,7 +27,7 @@ class SendsRequests
 
     /**
      * @param ReceiveMobileMoneyRequest $request
-     * @return ReceiveMobileMoneyResponse
+     * @return mixed Actual response body from gateway
      */
     public function sendReceiveMobileMoneyRequest(ReceiveMobileMoneyRequest $request)
     {
@@ -43,7 +41,7 @@ class SendsRequests
 
         $this->checkResponseStatus($response);
 
-        return $this->flatten(json_decode((string)$response->getBody(),true));
+        return $response->getBody();
     }
 
     /**
@@ -83,7 +81,7 @@ class SendsRequests
 
     /**
      * @param RefundRequest $request
-     * @return RefundResponse
+     * @return mixed Actual gateway response
      */
     public function sendRefundMobileMoneyRequest(RefundRequest $request)
     {
@@ -95,7 +93,7 @@ class SendsRequests
             'auth' => $this->auth
         ]);
         $this->checkResponseStatus($response);
-        return $this->flatten(json_decode((string)$response->getBody(),true));
+        return $response->getBody();
     }
 
     private function checkResponseStatus($response)
